@@ -1,0 +1,62 @@
+:root {
+  --brown: #6b2504;
+  --grey: #606060;
+  --black: #000000;
+  --black-grey: #101010;
+  --dark-grey: #3a3a3a;
+  --light-grey: #999999;
+  --white: #ffffff;
+}
+
+.background-color-dark-gery {
+  background-color: var(--dark-grey);
+}
+.background-color-black {
+  background-color: var(--black);
+}
+
+body {
+  background-color: var(--black-grey);
+  color: var(--white);
+}
+
+.user-image {
+  border-radius: 50px;
+}
+
+
+.hero-image {
+  background-image: url("../../images/banner.png");
+ 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.hero-text button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px 25px;
+  color: black;
+  background-color: #ddd;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hero-text button:hover {
+  background-color: #555;
+  color: white;
+}
