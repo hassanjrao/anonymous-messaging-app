@@ -32,8 +32,57 @@
 
 
 
+    <!-- Carousal Starts -->
 
-    <!-- Header Starts -->
+    <div class="container">
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="https://dummyimage.com/400x200/000/fff" alt="First slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5> Caption Heading</h5>
+                        <p> Caption text</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://dummyimage.com/400x200/000/fff" alt="Second slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5> Caption Heading</h5>
+                        <p> Caption text</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://dummyimage.com/400x200/000/fff" alt="Third slide">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5> Caption Heading</h5>
+                        <p> Caption text</p>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
+    </div>
+
+    <!-- Carousal Ends -->
+
+
+
+
 
     <main>
 
@@ -41,12 +90,14 @@
 
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <a class="btn btn-light" href="signin.php">Add Message</a>
+                    <a class="btn btn-light" href="all_messages.php">Add Message</a>
                 </div>
             </div>
 
             <div class="row">
-                <h2>voir les messages</h2>
+                <div class="col-lg-12">
+                    <h2>voir les messages</h2>
+                </div>
             </div>
 
             <!-- Message post starts -->
@@ -58,7 +109,7 @@
 
                     <div class="col-lg-8 post-card background-color-dark-gery pt-4 pb-4">
 
-                        <div class="main-msg">
+                        <div class="row main-msg">
                             <div class="col-lg-12 post-card-header pb-4">
                                 <div class="row">
                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -97,7 +148,7 @@
 
                         </div>
 
-                        <div class="comment-share">
+                        <div class="comment-share row">
                             <div class="col-lg-12">
                                 <i class="fas fa-comment-alt mr-5"><span class=" ml-2">comment</span></i>
                                 <i class="fas fa-comment-alt mr-5"><span class=" ml-2">share</span></i>
@@ -106,7 +157,7 @@
 
                         </div>
 
-                        <div class="add-comment">
+                        <div class="add-comment row">
                             <div class="col-lg-12 mt-4 ">
 
                                 <div class="row">
@@ -114,100 +165,20 @@
                                         <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
                                     </div>
                                     <div class="col-lg-11 justify-content-center mt-1">
-                                        <div class="input-group mb-3">
+                                        <form>
+                                            <div class="input-group mb-3">
 
-                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><button type="submit" name="sa"><i class="fas fa-arrow-circle-right"></i></button></span>
+                                                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><button type="submit" name="sa" class="btn"><i class="fas fa-arrow-circle-right"></i></button></span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-
-                        <div class="comments">
-
-                            <div class="col-lg-12 post-card-header mt-4">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <img class="user-image" src="https://via.placeholder.com/30" width="30px" height="30px" alt="">
-                                        <span>
-                                            <span>asfadf</span> <br>
-                                            <span style="font-size: xx-small;">19 March at 10:15</span>
-                                        </span>
-
-                                    </div>
-
-                                    <div class="col-lg-10 col-md-10 col-sm-10">
-
-                                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.</p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="col-lg-12 post-card-header mt-4">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <img class="user-image" src="https://via.placeholder.com/30" width="30px" height="30px" alt="">
-                                        <span>
-                                            <span>asfadf</span> <br>
-                                            <span style="font-size: xx-small;">19 March at 10:15</span>
-                                        </span>
-
-                                    </div>
-
-                                    <div class="col-lg-10 col-md-10 col-sm-10">
-
-                                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.</p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="view-all">
-                            <a href="all_posts.php">View All Comments</a>
-                        </div>
-
-
-
-
-
-
-
 
                     </div>
 
@@ -216,6 +187,7 @@
 
             </div>
 
+
             <div class="msg-post">
 
 
@@ -223,7 +195,7 @@
 
                     <div class="col-lg-8 post-card background-color-dark-gery pt-4 pb-4">
 
-                        <div class="main-msg">
+                        <div class="main-msg row">
                             <div class="col-lg-12 post-card-header pb-4">
                                 <div class="row">
                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -262,7 +234,7 @@
 
                         </div>
 
-                        <div class="comment-share">
+                        <div class="comment-share row">
                             <div class="col-lg-12">
                                 <i class="fas fa-comment-alt mr-5"><span class=" ml-2">comment</span></i>
                                 <i class="fas fa-comment-alt mr-5"><span class=" ml-2">share</span></i>
@@ -271,7 +243,7 @@
 
                         </div>
 
-                        <div class="add-comment">
+                        <div class="add-comment row">
                             <div class="col-lg-12 mt-4 ">
 
                                 <div class="row">
@@ -283,7 +255,7 @@
 
                                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                                             <div class="input-group-append">
-                                                <span class="input-group-text"><button type="submit" name="sa"><i class="fas fa-arrow-circle-right"></i></button></span>
+                                                <span class="input-group-text"><button type="submit" class="btn" name="sa"><i class="fas fa-arrow-circle-right"></i></button></span>
                                             </div>
                                         </div>
                                     </div>
@@ -292,7 +264,7 @@
                             </div>
                         </div>
 
-                        <div class="comments">
+                        <div class="comments row">
 
                             <div class="col-lg-12 post-card-header mt-4">
                                 <div class="row">
@@ -598,7 +570,7 @@
             </div>
 
 
-        </div>
+
 
 
 
