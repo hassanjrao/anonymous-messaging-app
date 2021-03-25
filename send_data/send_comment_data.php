@@ -27,49 +27,81 @@ if (isset($_SESSION["user_id"])) {
 
         $comments = "";
 
+        if (isset($_GET["msg"])) {
+            $query_comment = $conn->prepare(
 
-        $query_comment = $conn->prepare(
+                "SELECT comments.*, users.id as comment_user_id, users.username as comment_username, users.profile_picture as comment_user_pic
+             FROM comments 
+             INNER JOIN users
+             ON comments.user_id=users.id
+             WHERE comments.message_id='$message_id'
+            order by comments.id desc
+            "
+            );
+        } else {
 
-            "SELECT comments.*, users.id as comment_user_id, users.username as comment_username, users.profile_picture as comment_user_pic
+            $query_comment = $conn->prepare(
+
+                "SELECT comments.*, users.id as comment_user_id, users.username as comment_username, users.profile_picture as comment_user_pic
          FROM comments 
          INNER JOIN users
          ON comments.user_id=users.id
          WHERE comments.message_id='$message_id'
         order by comments.id desc
         LIMIT 3"
-        );
+            );
+        }
         $query_comment->execute();
+
+        $c = 1;
 
         while ($result_comment = $query_comment->fetch(PDO::FETCH_ASSOC)) {
 
+            $c++;
+
             $comments .= "
 
-        <div class='col-lg-12 post-card-header mt-4'>
-            <div class='row'>
-            <div class='col-lg-2 col-md-2 col-sm-2'>
-                <img class='user-image' src=images/user_images/" . $result_comment["comment_user_pic"] . " width='30px' height='30px' alt=''>
-                <span>
-                    <span>" . $result_comment["comment_username"] . "</span> <br>
-                    <span style='font-size: xx-small;'>" . $result_comment["created_at"] . "</span>
-                </span>
+           
+                <div class='col-lg-12 post-card-header mt-4'>
+                    <div class='row'>
+                        <div class='col-lg-2 col-md-2 col-sm-2'>
+                            <img class='user-image' src=images/user_images/" . $result_comment["comment_user_pic"] . " width='30px' height='30px' alt=''>
+                            <span>
+                                <span>" . $result_comment["comment_username"] . "</span> <br>
+                                <span style='font-size: xx-small;'>" . $result_comment["created_at"] . "</span>
+                            </span>
+
+                        </div>
+
+                        <div class='col-lg-10 col-md-10 col-sm-10'>
+
+                            <p>
+                                " . $result_comment["comment"] . "
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class='col-lg-10 col-md-10 col-sm-10'>
-
-                <p>
-                " . $result_comment["comment"] . "
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-   
       ";
         }
+
+         if ($c > 3) {
+          
+
+            $comments.="
+                <div class='ml-4 mt-4'>
+                    <a href='message.php?msg_id=$message_id'>View All Comments</a>
+                </div>
+                ";
+           }
+
+      
+
 
 
 
@@ -82,8 +114,7 @@ if (isset($_SESSION["user_id"])) {
    
 </div>';
     }
-}
-else {
+} else {
     echo "<span class='ml-5 text-danger'>*Sign in to comment</span>";
 }
 

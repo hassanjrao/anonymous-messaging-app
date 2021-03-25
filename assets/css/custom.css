@@ -113,6 +113,11 @@ textarea:focus {
  
 }
 
+.comment::-webkit-input-placeholder {
+  color: red !important;
+ 
+}
+
 input:read-only {
   color: var(--black);
 }

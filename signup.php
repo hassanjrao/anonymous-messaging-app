@@ -13,6 +13,8 @@ if (isset($_POST['submit'])) {
     $email = strtolower(trim($_POST['email']));
     $password = password_hash(trim($_POST['password']), PASSWORD_DEFAULT);
 
+    $profile_picture="user_placeholder.jpg";
+
     $stmt = $conn->prepare("INSERT INTO `users`( `username`,`email`,`password`,`profile_picture`,`created_at`) VALUES (:username,:email,:password,:profile_picture,CURRENT_TIMESTAMP)");
 
     $stmt->bindParam(':username', $username);

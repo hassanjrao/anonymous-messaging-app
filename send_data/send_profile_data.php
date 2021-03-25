@@ -83,6 +83,8 @@ if ($_FILES['profile_picture']['size'] == 0) {
     $stmt->bindParam(':phone', $phone);
 
     $stmt->bindParam(':id', $user_id);
+
+    $_SESSION['profile_picture']=$profile_picture;
 }
 
 

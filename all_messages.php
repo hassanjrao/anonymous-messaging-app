@@ -55,17 +55,10 @@ session_start();
                                 <div class="col-lg-12 post-card-header pb-4">
                                     <div class="row">
                                         <div class="col-lg-1 col-md-1 col-sm-1">
-                                            <?php
-                                            if (isset($_SESSION["user_id"])) {
-                                            ?>
-                                                <img class="user-image" src="<?php echo "images/user_images/" . $_SESSION["profile_picture"]; ?>" width="50px" height="50px" alt="">
 
-                                            <?php
-                                            } else {
+                                            <img class="user-image" src="<?php echo "images/user_images/" . $_SESSION["profile_picture"]; ?>" width="50px" height="50px" alt="">
 
-                                            ?>
-                                                <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
-                                            <?php } ?>
+
                                         </div>
 
                                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -212,7 +205,7 @@ session_start();
 
                                 <?php
                                 $message_id = $result["id"];
-                                $c = false;
+                                $c = 1;
                                 ?>
 
                                 <div class="comments row" id=<?php echo "comments-div-$message_id" ?>>
@@ -233,7 +226,7 @@ session_start();
 
                                     while ($result_comment = $query_comment->fetch(PDO::FETCH_ASSOC)) {
 
-                                        $c = true;
+                                        $c++;
                                     ?>
 
                                         <div class="col-lg-12 post-card-header mt-4">
@@ -268,14 +261,16 @@ session_start();
 
 
 
-                                </div>
-                                <?php if ($c) {
-                                ?>
 
-                                    <div class=' mt-4'>
-                                        <a href='message.php'>View All Comments</a>
-                                    </div>
-                                <?php } ?>
+                                    <?php if ($c > 3) {
+                                    ?>
+
+                                        <div class='ml-4 mt-4'>
+                                            <a href='<?php echo  "message.php?msg_id=$message_id" ?>'>View All Comments</a>
+                                        </div>
+                                    <?php } ?>
+
+                                </div>
                             </div>
 
 
@@ -1106,31 +1101,41 @@ session_start();
         });
 
 
+
+
         function submitComment(id) {
             var comment = $("#comment-" + id).val();
             var message_id = id;
-            $.ajax({
-                type: "POST",
-                url: "send_data/send_comment_data.php",
-                data: {
-                    comment: comment,
-                    message_id: message_id
-                },
-                success: function(data) {
-                    // var res = $.parseJSON(data);
-                    console.log(data);
-                    $("#comments-div-" + id).html(data);
+
+            console.log(comment);
+
+            if (comment == "") {
+                $("#comment-" + id).addClass('comment');
+                document.getElementById("comment-" + id).placeholder = "Veuillez écrire quelque chose..";
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "send_data/send_comment_data.php",
+                    data: {
+                        comment: comment,
+                        message_id: message_id
+                    },
+                    success: function(data) {
+                        // var res = $.parseJSON(data);
+                        console.log(data);
+                        $("#comments-div-" + id).html(data);
 
 
-                    $('html, body').animate({
-                            scrollTop: $("#comments-div-" + id).offset().top
-                        },
-                        'slow');
+                        $('html, body').animate({
+                                scrollTop: $("#comments-div-" + id).offset().top
+                            },
+                            'slow');
 
 
 
-                }
-            });
+                    }
+                });
+            }
         }
 
         /* $('#form-comment').validate({ // initialize the plugin
