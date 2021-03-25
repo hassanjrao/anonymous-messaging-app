@@ -1,6 +1,10 @@
 <?php
 ob_start();
 
+
+
+
+
 include_once("includes/db_connection.php");
 
 
@@ -9,14 +13,15 @@ if (isset($_POST['submit'])) {
     $email = strtolower(trim($_POST['email']));
     $password = password_hash(trim($_POST['password']), PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare("INSERT INTO `users`( `username`,`email`,`password`,`created_at`) VALUES (:username,:email,:password,CURRENT_TIMESTAMP)");
+    $stmt = $conn->prepare("INSERT INTO `users`( `username`,`email`,`password`,`profile_picture`,`created_at`) VALUES (:username,:email,:password,:profile_picture,CURRENT_TIMESTAMP)");
 
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $password);
+    $stmt->bindParam(':profile_picture', $profile_picture);
 
     if ($stmt->execute()) {
-      
+
         header("Location:signin.php?registered=true");
     }
 }
@@ -27,25 +32,10 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Anonymys Posting App</title>
 
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Neon Admin Panel" />
-    <meta name="author" content="" />
-
-
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/custom.css">
-
-    <script src="https://kit.fontawesome.com/e98e60b820.js" crossorigin="anonymous"></script>
+    <?php include_once("includes/head.php")  ?>
 
 
 </head>

@@ -1,27 +1,32 @@
+<?php
+// ob_start();
+
+session_start();
+include_once("includes/db_connection.php");
+
+
+
+if (empty($_COOKIE['remember_me'])) {
+
+    if (empty($_SESSION['user_id'])) {
+
+        header('location: signin.php');
+    }
+}
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Anonymys Posting App</title>
 
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Neon Admin Panel" />
-    <meta name="author" content="" />
-
-
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/custom.css">
-
-    <script src="https://kit.fontawesome.com/e98e60b820.js" crossorigin="anonymous"></script>
-
+    <?php include_once("includes/head.php")  ?>
 </head>
 
 <body>
@@ -47,58 +52,101 @@
 
             </div>
 
+            <div class="row justify-content-center">
+
+                <div class="col-lg-6 col-md-6 col-sm-12 " id="notification-div">
+
+                </div>
+
+            </div>
+
+
+            <?php
+
+            $user_id = $_SESSION["user_id"];
+
+            $query = $conn->prepare("SELECT * FROM users where id='$user_id'");
+            $query->execute();
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+
+
+            ?>
+
+
 
             <div class="row justify-content-center mt-5 mb-4">
 
                 <div class="col-lg-6 col-md-6 col-sm-12">
 
-                    <form class="profile-form">
+                    <form id="form" class="profile-form">
 
-                        <div class="form-group">
-                            <label for="inputAddress">De campagne</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="De campagne">
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <img class="img-fluid rounded-circle" width="150px" height="150px" src="<?php echo  is_null($result["profile_picture"]) ? "https://via.placeholder.com/150" : "images/user_images/" . $result["profile_picture"]; ?>">
+                                <br>
+                                <label for="inputAddress">Profile Picture</label>
+                                <input type="file" name="profile_picture" value="" class="form-control">
+                            </div>
                         </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Username</label>
+                                <input name="username" readonly type="text" class="form-control" value="<?php echo $result["username"]; ?>" placeholder="Username">
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Email</label>
+                                <input readonly name="email" type="email" class="form-control" value="<?php echo $result["email"]; ?>" id="inputPassword4" placeholder="Email">
+                            </div>
+
+
+                        </div>
+
+
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="inputEmail4">Prénom</label>
-                                <input type="text" class="form-control" id="inputEmail4" placeholder="Prénom">
+                                <input name="fname" type="text" class="form-control" value="<?php echo ucwords($result["fname"]); ?>" placeholder="Prénom">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">Nom de famille</label>
-                                <input type="text" class="form-control" id="inputPassword4" placeholder="Nom de famille">
+                                <input name="lname" type="text" class="form-control" value="<?php echo ucwords($result["lname"]); ?>" placeholder="Nom de famille">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="inputAddress">Adresse</label>
-                            <textarea class="form-control" placeholder="Adresse"></textarea>
+                            <textarea name="address" class="form-control" placeholder="Adresse"><?php echo $result["address"]; ?></textarea>
                         </div>
 
+                        <div class="form-group">
+                            <label for="inputAddress">De campagne</label>
+                            <input name="country" type="text" class="form-control" value="<?php echo ucwords($result["country"]); ?>" placeholder="De campagne">
+                        </div>
 
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="inputCity">Ville</label>
-                                <input type="text" class="form-control" id="inputCity" placeholder="Ville">
+                                <input name="city" type="text" class="form-control" value="<?php echo ucwords($result["city"]); ?>" placeholder="Ville">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="inputCity">Etat</label>
-                                <input type="text" class="form-control" id="inputCity" placeholder="Etat">
+                                <input name="state" type="text" class="form-control" value="<?php echo ucwords($result["state"]); ?>" placeholder="Etat">
                             </div>
 
-                            <div class="form-group col-md-4">
-                                <label for="inputCity">Code postal</label>
-                                <input type="text" class="form-control" id="inputCity" placeholder="Etat">
-                            </div>
+
 
 
                         </div>
                         <div class="form-group">
                             <label for="inputAddress">Téléphone</label>
-                            <input type="number" class="form-control" id="inputAddress" placeholder="Téléphone">
+                            <input name="phone" type="number" class="form-control" value="<?php echo $result["phone"]; ?>" placeholder="Téléphone">
                         </div>
 
                         <div class="form-group text-center mt-4">
-                            <button type="submit" class="btn btn-light">nous faire parvenir
+                            <button name="submit" value="upd" type="submit" class="btn btn-light">nous faire parvenir
                             </button>
                         </div>
                     </form>
@@ -121,6 +169,73 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <script src="admin/assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+
+    <script src="admin/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="admin/assets/js/jquery.validate.min.js"></script>
+
+
+
+    <script>
+        $('#form').validate({ // initialize the plugin
+            ignore: [],
+
+            rules: {
+
+                username: {
+                    required: true,
+
+                },
+                email: {
+                    required: true,
+                    email: true
+
+                },
+
+
+
+            },
+            submitHandler: function(form) { // for demo
+                var form_data = new FormData($("#form")[0]);
+
+                console.log(form_data);
+
+                $.ajax({
+                    type: "POST",
+                    url: "send_data/send_profile_data.php",
+                    data: form_data,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        var res = $.parseJSON(data);
+                        console.log(res);
+                        $("#notification-div").html(res["msg"]);
+
+
+                        $('html, body').animate({
+                            scrollTop: $("#notification-div").offset().top
+                        }, 100);
+
+                        if (res["status"] == "success") {
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000)
+                        }
+                    }
+                });
+
+
+            }
+        });
+    </script>
+
 </body>
 
 </html>
+
+<?php
+
+// ob_end_flush();
+
+?>

@@ -4,9 +4,7 @@ ob_start();
 include('includes/db_connection.php');
 session_start();
 
-if (isset($_SESSION['user_Id'])) {
-    header("Location:all_messages.php");
-}
+
 
 
 if (isset($_POST['submit'])) {
@@ -23,10 +21,11 @@ if (isset($_POST['submit'])) {
 
         if (password_verify($password, $result["password"])) {
             $_SESSION['user_id'] = $result['id'];
+            $_SESSION['username'] = $result['username'];
+            $_SESSION['profile_picture'] = $result['profile_picture'];
             $_SESSION['success'] = "Login Successfully";
             if (isset($_POST["remember_me"])) {
-                setcookie("user_login", $_POST["email"], time() + (10 * 365 * 24 * 60 * 60));
-                setcookie("user_password", $_POST["password"], time() + (10 * 365 * 24 * 60 * 60));
+                setcookie("remember_me", $result['id'], time() + (86400 * 30), "/"); // 86400 = 1 day
             }
 
             header("Location:profile.php");
@@ -76,25 +75,10 @@ if (isset($_POST['submit'])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anonymys Posting App</title>
 
+    <?php include_once("includes/head.php")  ?>
+    <title>Sign In</title>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Neon Admin Panel" />
-    <meta name="author" content="" />
-
-
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/custom.css">
-
-    <script src="https://kit.fontawesome.com/e98e60b820.js" crossorigin="anonymous"></script>
 
 </head>
 

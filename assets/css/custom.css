@@ -112,3 +112,8 @@ textarea:focus {
   color: red !important;
  
 }
+
+input:read-only {
+  color: var(--black);
+}
+
