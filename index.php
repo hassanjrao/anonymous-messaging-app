@@ -2,6 +2,7 @@
 
 ob_start();
 session_start();
+include('includes/db_connection.php');
 
 ?>
 
@@ -93,259 +94,303 @@ session_start();
 
             <!-- Message post starts -->
 
-            <div class="msg-post">
+            <section>
+
+                <?php
 
 
-                <div class="row justify-content-center mt-5 mb-5">
+                // "
+                // SELECT comments.*, count(comments.message_id) as number_of_comments        
+                // from comments
+                // left join messages
+                // on (comments.message_id = messages.id)
+                // group by
+                // comments.message_id
+                // "
 
-                    <div class="col-lg-8 post-card background-color-dark-gery pt-4 pb-4">
 
-                        <div class="row main-msg">
-                            <div class="col-lg-12 post-card-header pb-4">
-                                <div class="row">
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                        <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
+
+
+                $query = $conn->prepare(
+
+                    "SELECT message_id,
+                    COUNT(message_id) AS `value_occurrence` 
+                    FROM     comments
+                    GROUP BY `message_id`
+                    ORDER BY `value_occurrence` DESC
+                    LIMIT    2;"
+                );
+                $query->execute();
+
+                $msg_arr = [];
+
+                while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
+
+                    print_r($result);
+
+                ?>
+                
+
+
+                <?php
+                }
+
+                ?>
+                <div class="msg-post">
+
+
+                    <div class="row justify-content-center mt-5 mb-5">
+
+                        <div class="col-lg-8 post-card background-color-dark-gery pt-4 pb-4">
+
+                            <div class="row main-msg">
+                                <div class="col-lg-12 post-card-header pb-4">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
+
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <h5>asfadf</h5>
+                                            <p class="post-card-date">19 March at 10:15</p>
+                                        </div>
 
                                     </div>
 
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <h5>asfadf</h5>
-                                        <p class="post-card-date">19 March at 10:15</p>
-                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 post-card-body">
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat vel, iure sequi,
+                                        quibusdam
+                                        adipisci, tenetur voluptatum minima ad natus cupiditate architecto. Fugiat,
+                                        doloremque
+                                        voluptatibus quo reprehenderit perferendis nam veniam magni!
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos vel suscipit corporis
+                                        pariatur ab eaque praesentium, fugiat ad. Provident itaque repellat, eius nulla
+                                        voluptatum
+                                        minus corporis deserunt aut fugiat quam.
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos totam hic, non culpa
+                                        deleniti
+                                        adipisci. Recusandae pariatur nostrum voluptas a perspiciatis dolorum dolorem ullam?
+                                        Cum
+                                        excepturi vitae modi voluptates veritatis!
+
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="comment-share row">
+                                <div class="col-lg-12">
+                                    <i class="fas fa-comment-alt mr-5"><span class=" ml-2">comment</span></i>
+                                    <i class="fas fa-comment-alt mr-5"><span class=" ml-2">share</span></i>
 
                                 </div>
 
                             </div>
 
-                            <div class="col-lg-12 post-card-body">
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat vel, iure sequi,
-                                    quibusdam
-                                    adipisci, tenetur voluptatum minima ad natus cupiditate architecto. Fugiat,
-                                    doloremque
-                                    voluptatibus quo reprehenderit perferendis nam veniam magni!
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos vel suscipit corporis
-                                    pariatur ab eaque praesentium, fugiat ad. Provident itaque repellat, eius nulla
-                                    voluptatum
-                                    minus corporis deserunt aut fugiat quam.
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos totam hic, non culpa
-                                    deleniti
-                                    adipisci. Recusandae pariatur nostrum voluptas a perspiciatis dolorum dolorem ullam?
-                                    Cum
-                                    excepturi vitae modi voluptates veritatis!
+                            <div class="add-comment row">
+                                <div class="col-lg-12 mt-4 ">
 
-                                </p>
-                            </div>
+                                    <div class="row">
+                                        <div class="col-lg-1">
+                                            <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
+                                        </div>
+                                        <div class="col-lg-11 justify-content-center mt-1">
+                                            <form>
+                                                <div class="input-group mb-3">
 
-                        </div>
-
-                        <div class="comment-share row">
-                            <div class="col-lg-12">
-                                <i class="fas fa-comment-alt mr-5"><span class=" ml-2">comment</span></i>
-                                <i class="fas fa-comment-alt mr-5"><span class=" ml-2">share</span></i>
-
-                            </div>
-
-                        </div>
-
-                        <div class="add-comment row">
-                            <div class="col-lg-12 mt-4 ">
-
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
+                                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"><button type="submit" name="sa" class="btn"><i class="fas fa-arrow-circle-right"></i></button></span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-11 justify-content-center mt-1">
-                                        <form>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="msg-post">
+
+
+                    <div class="row justify-content-center mt-5 mb-5">
+
+                        <div class="col-lg-8 post-card background-color-dark-gery pt-4 pb-4">
+
+                            <div class="main-msg row">
+                                <div class="col-lg-12 post-card-header pb-4">
+                                    <div class="row">
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
+
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <h5>asfadf</h5>
+                                            <p class="post-card-date">19 March at 10:15</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-12 post-card-body">
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat vel, iure sequi,
+                                        quibusdam
+                                        adipisci, tenetur voluptatum minima ad natus cupiditate architecto. Fugiat,
+                                        doloremque
+                                        voluptatibus quo reprehenderit perferendis nam veniam magni!
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos vel suscipit corporis
+                                        pariatur ab eaque praesentium, fugiat ad. Provident itaque repellat, eius nulla
+                                        voluptatum
+                                        minus corporis deserunt aut fugiat quam.
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos totam hic, non culpa
+                                        deleniti
+                                        adipisci. Recusandae pariatur nostrum voluptas a perspiciatis dolorum dolorem ullam?
+                                        Cum
+                                        excepturi vitae modi voluptates veritatis!
+
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="comment-share row">
+                                <div class="col-lg-12">
+                                    <i class="fas fa-comment-alt mr-5"><span class=" ml-2">comment</span></i>
+                                    <i class="fas fa-comment-alt mr-5"><span class=" ml-2">share</span></i>
+
+                                </div>
+
+                            </div>
+
+                            <div class="add-comment row">
+                                <div class="col-lg-12 mt-4 ">
+
+                                    <div class="row">
+                                        <div class="col-lg-1">
+                                            <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
+                                        </div>
+                                        <div class="col-lg-11 justify-content-center mt-1">
                                             <div class="input-group mb-3">
 
                                                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text"><button type="submit" name="sa" class="btn"><i class="fas fa-arrow-circle-right"></i></button></span>
+                                                    <span class="input-group-text"><button type="submit" class="btn" name="sa"><i class="fas fa-arrow-circle-right"></i></button></span>
                                                 </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-            <div class="msg-post">
-
-
-                <div class="row justify-content-center mt-5 mb-5">
-
-                    <div class="col-lg-8 post-card background-color-dark-gery pt-4 pb-4">
-
-                        <div class="main-msg row">
-                            <div class="col-lg-12 post-card-header pb-4">
-                                <div class="row">
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                        <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
-
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <h5>asfadf</h5>
-                                        <p class="post-card-date">19 March at 10:15</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-12 post-card-body">
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat vel, iure sequi,
-                                    quibusdam
-                                    adipisci, tenetur voluptatum minima ad natus cupiditate architecto. Fugiat,
-                                    doloremque
-                                    voluptatibus quo reprehenderit perferendis nam veniam magni!
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos vel suscipit corporis
-                                    pariatur ab eaque praesentium, fugiat ad. Provident itaque repellat, eius nulla
-                                    voluptatum
-                                    minus corporis deserunt aut fugiat quam.
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos totam hic, non culpa
-                                    deleniti
-                                    adipisci. Recusandae pariatur nostrum voluptas a perspiciatis dolorum dolorem ullam?
-                                    Cum
-                                    excepturi vitae modi voluptates veritatis!
-
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <div class="comment-share row">
-                            <div class="col-lg-12">
-                                <i class="fas fa-comment-alt mr-5"><span class=" ml-2">comment</span></i>
-                                <i class="fas fa-comment-alt mr-5"><span class=" ml-2">share</span></i>
-
-                            </div>
-
-                        </div>
-
-                        <div class="add-comment row">
-                            <div class="col-lg-12 mt-4 ">
-
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <img class="user-image" src="https://via.placeholder.com/50" width="50px" height="50px" alt="">
-                                    </div>
-                                    <div class="col-lg-11 justify-content-center mt-1">
-                                        <div class="input-group mb-3">
-
-                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><button type="submit" class="btn" name="sa"><i class="fas fa-arrow-circle-right"></i></button></span>
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+                            </div>
+
+                            <div class="comments row">
+
+                                <div class="col-lg-12 post-card-header mt-4">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <img class="user-image" src="https://via.placeholder.com/30" width="30px" height="30px" alt="">
+                                            <span>
+                                                <span>asfadf</span> <br>
+                                                <span style="font-size: xx-small;">19 March at 10:15</span>
+                                            </span>
+
+                                        </div>
+
+                                        <div class="col-lg-10 col-md-10 col-sm-10">
+
+                                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
+                                                blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
+                                                praesentium
+                                                suscipit voluptas, dolorum cum maxime quas et.
+                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
+                                                blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
+                                                praesentium
+                                                suscipit voluptas, dolorum cum maxime quas et.
+
+                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
+                                                blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
+                                                praesentium
+                                                suscipit voluptas, dolorum cum maxime quas et.</p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-lg-12 post-card-header mt-4">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <img class="user-image" src="https://via.placeholder.com/30" width="30px" height="30px" alt="">
+                                            <span>
+                                                <span>asfadf</span> <br>
+                                                <span style="font-size: xx-small;">19 March at 10:15</span>
+                                            </span>
+
+                                        </div>
+
+                                        <div class="col-lg-10 col-md-10 col-sm-10">
+
+                                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
+                                                blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
+                                                praesentium
+                                                suscipit voluptas, dolorum cum maxime quas et.
+                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
+                                                blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
+                                                praesentium
+                                                suscipit voluptas, dolorum cum maxime quas et.
+
+                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
+                                                blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
+                                                praesentium
+                                                suscipit voluptas, dolorum cum maxime quas et.</p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <a href="all_posts.php">View All Comments</a>
                                 </div>
 
                             </div>
+
+
+
+
+
+
+
+
+
+
                         </div>
-
-                        <div class="comments row">
-
-                            <div class="col-lg-12 post-card-header mt-4">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <img class="user-image" src="https://via.placeholder.com/30" width="30px" height="30px" alt="">
-                                        <span>
-                                            <span>asfadf</span> <br>
-                                            <span style="font-size: xx-small;">19 March at 10:15</span>
-                                        </span>
-
-                                    </div>
-
-                                    <div class="col-lg-10 col-md-10 col-sm-10">
-
-                                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.</p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="col-lg-12 post-card-header mt-4">
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <img class="user-image" src="https://via.placeholder.com/30" width="30px" height="30px" alt="">
-                                        <span>
-                                            <span>asfadf</span> <br>
-                                            <span style="font-size: xx-small;">19 March at 10:15</span>
-                                        </span>
-
-                                    </div>
-
-                                    <div class="col-lg-10 col-md-10 col-sm-10">
-
-                                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.
-
-                                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam vel labore
-                                            blanditiis a nobis magni minus ad autem animi veritatis iusto fugit
-                                            praesentium
-                                            suscipit voluptas, dolorum cum maxime quas et.</p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-12">
-                                <a href="all_posts.php">View All Comments</a>
-                            </div>
-
-                        </div>
-
-
-
-
-
-
-
-
 
 
                     </div>
 
-
                 </div>
 
-            </div>
 
+            </section>
             <!-- Message post ends -->
 
 

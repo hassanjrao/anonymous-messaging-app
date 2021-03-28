@@ -108,6 +108,17 @@ textarea:focus {
   color: white;
 }
 
+.profile-form select{
+  background-color: var(--dark-grey);
+  color: white;
+  border: none;
+}
+
+.profile-form select:focus {
+  background-color: var(--dark-grey);
+  color: white;
+}
+
 .error {
   color: red !important;
  

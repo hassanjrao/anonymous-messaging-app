@@ -53,60 +53,45 @@
 
 
 
-			<li class="has-sub">
-				<a href="#">
+			<li >
+				<a href="all_users.php">
 					<i class="entypo-layout"></i>
-					<span class="title">Vendors</span>
+					<span class="title">Users</span>
 				</a>
-				<ul>
-					<li>
-						<a href="add_vendors.php">
-							<span class="title">Add Vendors</span>
-						</a>
-					</li>
-
-					<li>
-						<a href="all_vendors.php">
-							<span class="title">All Vendors</span>
-						</a>
-
-					</li>
-
-
-				</ul>
+				
 			</li>
 
 
 			<li class="">
-				<a href="vendor_profile.php">
+				<a href="all_messages.php">
 					<i class="entypo-gauge"></i>
-					<span class="title">Profile Setting</span>
+					<span class="title">Messages</span>
 				</a>
 
 			</li>
 
 
 
-			<!-- <li class="has-sub">
+			<li class="has-sub">
 				<a href="#">
 					<i class="entypo-layout"></i>
-					<span class="title">Genres</span>
+					<span class="title">Moderators</span>
 				</a>
 				<ul>
 					<li>
-						<a href="add_genres.php">
-							<span class="title">Add Genres</span>
+						<a href="add_moderators.php">
+							<span class="title">Add Moderators</span>
 						</a>
 					</li>
 
 					<li>
-						<a href="all_genres.php">
-							<span class="title">All Genres</span>
+						<a href="all_moderators.php">
+							<span class="title">All Moderators</span>
 						</a>
 					</li>
 
 				</ul>
-			</li> -->
+			</li>
 
 
 

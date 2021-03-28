@@ -1,11 +1,11 @@
 <?php 
 
 
-$username = $_SERVER["HTTP_HOST"] == "localhost" ? "root" : "chefscre_xl";
+$username = $_SERVER["HTTP_HOST"] == "localhost" ? "root" : "confieohsn";
 
-$password = $_SERVER["HTTP_HOST"] == "localhost" ? "" : "DVrFkC3Glhp0";
+$password = $_SERVER["HTTP_HOST"] == "localhost" ? "" : "kJb9L4YWrnkpu9b";
 
-$db_name = $_SERVER["HTTP_HOST"] == "localhost" ? "msgs_db" : "DVrFkC3Glhp0";
+$db_name = $_SERVER["HTTP_HOST"] == "localhost" ? "msgs_db" : "confieohsn";
 
 $servername="localhost";
 

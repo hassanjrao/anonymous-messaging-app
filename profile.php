@@ -104,46 +104,68 @@ if (empty($_COOKIE['remember_me'])) {
 
                         </div>
 
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Year of Birth</label>
+                                <input name="year_of_birth" type="date" class="form-control" value="<?php echo $result["year_of_birth"]; ?>" placeholder="Year of Birth">
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Gender</label>
+                                <select name="gender" class="form-control">
+                                    <?php
+                                    if ($result["gender"] == "Male") {
+                                    ?>
+                                        <option selected>Male</option>
+                                        <option>Female</option>
+                                        <option>Others</option>
+                                    <?php
+                                    } else if ($result["gender"] == "Female") {
+                                    ?>
+                                        <option selected>Female</option>
+                                        <option>Male</option>
+                                        <option>Others</option>
+                                    <?php
+                                    } else if ($result["gender"] == "Others") {
+                                    ?>
+                                        <option selected>Others</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <option selected disabled>Select Gender</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Others</option>
+                                    <?php
+                                    }
+                                    ?>
+
+
+
+                                </select>
+                            </div>
+
+
+                        </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="inputEmail4">Prénom</label>
-                                <input name="fname" type="text" class="form-control" value="<?php echo ucwords($result["fname"]); ?>" placeholder="Prénom">
+                                <label for="inputEmail4">Province</label>
+                                <input name="province" type="text" class="form-control" value="<?php echo $result["province"]; ?>" placeholder="Province">
+
                             </div>
+
                             <div class="form-group col-md-6">
-                                <label for="inputPassword4">Nom de famille</label>
-                                <input name="lname" type="text" class="form-control" value="<?php echo ucwords($result["lname"]); ?>" placeholder="Nom de famille">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputAddress">Adresse</label>
-                            <textarea name="address" class="form-control" placeholder="Adresse"><?php echo $result["address"]; ?></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputAddress">De campagne</label>
-                            <input name="country" type="text" class="form-control" value="<?php echo ucwords($result["country"]); ?>" placeholder="De campagne">
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="inputCity">Ville</label>
-                                <input name="city" type="text" class="form-control" value="<?php echo ucwords($result["city"]); ?>" placeholder="Ville">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inputCity">Etat</label>
-                                <input name="state" type="text" class="form-control" value="<?php echo ucwords($result["state"]); ?>" placeholder="Etat">
+                                <label for="inputAddress">De campagne</label>
+                                <input name="country" type="text" class="form-control" value="<?php echo ucwords($result["country"]); ?>" placeholder="De campagne">
                             </div>
 
 
+                        </div>
 
 
-                        </div>
-                        <div class="form-group">
-                            <label for="inputAddress">Téléphone</label>
-                            <input name="phone" type="number" class="form-control" value="<?php echo $result["phone"]; ?>" placeholder="Téléphone">
-                        </div>
 
                         <div class="form-group text-center mt-4">
                             <button name="submit" value="upd" type="submit" class="btn btn-light">nous faire parvenir

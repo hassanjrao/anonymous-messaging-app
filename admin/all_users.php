@@ -1,11 +1,11 @@
 <?php
 ob_start();
-include('includes/db.php');
+include('../includes/db_connection.php');
 session_start();
 
-if (empty($_COOKIE['remember_me'])) {
+if (empty($_COOKIE['ad_remember_me'])) {
 
-    if (empty($_SESSION['user_id'])) {
+    if (empty($_SESSION['ad_user_id'])) {
 
         header('location:login.php');
     }
@@ -17,7 +17,7 @@ if (empty($_COOKIE['remember_me'])) {
 <head>
     <?php include_once("includes/head.php"); ?>
 
-    <title>All Vendors</title>
+    <title>All users</title>
 </head>
 
 <body class="page-body" data-url="http://neon.dev">
@@ -52,15 +52,15 @@ if (empty($_COOKIE['remember_me'])) {
                 </li>
                 <li>
 
-                    <a href="#">Vendors</a>
+                    <a href="#">Users</a>
                 </li>
                 <li class="active">
 
-                    <strong>All Vendors</strong>
+                    <strong>All Users</strong>
                 </li>
             </ol>
 
-            <h2>All Vendors</h2>
+            <h2>All Users</h2>
 
             <?php
 
@@ -101,7 +101,7 @@ if (empty($_COOKIE['remember_me'])) {
 
             <script type="text/javascript">
                 jQuery(document).ready(function($) {
-                    var $table1 = jQuery('#table-2');
+                    var $table1 = jQuery('#table');
 
                     // Initialize DataTable
                     $table1.DataTable({
@@ -109,6 +109,7 @@ if (empty($_COOKIE['remember_me'])) {
                             [10, 25, 50, -1],
                             [10, 25, 50, "All"]
                         ],
+                        responsive: true,
                         "bStateSave": true
                     });
 
@@ -124,15 +125,18 @@ if (empty($_COOKIE['remember_me'])) {
             <!-- <h3>Table without DataTable Header</h3> -->
 
 
-            <table class="table table-bordered datatable  dt-responsive nowrap" id="table-2">
+            <table id="table" class=" table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
+                        <th>Username</th>
                         <th>Email</th>
-                        <th>Password</th>
-                        <th>Address</th>
-                        <th>Status</th>
+                        <th>Profile Picture</th>
+                        <th>Year Of Birth</th>
+                        <th>Gender</th>
+                        <th>Province</th>
+                        <th>Country</th>
+                       
                         <th>Created at</th>
 
                         <th>Updated at</th>
@@ -149,7 +153,7 @@ if (empty($_COOKIE['remember_me'])) {
 
 
                     $query = $conn->prepare(
-                        "SELECT * from users where role='2' order by id desc"
+                        "SELECT * from users where role='user' order by id desc"
                     );
                     $query->execute();
                     while ($result = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -158,25 +162,24 @@ if (empty($_COOKIE['remember_me'])) {
 
                         <tr>
                             <td><?php echo $i++; ?></td>
-                            <td><?php echo $result["name"]; ?></td>
+                            <td><?php echo $result["username"]; ?></td>
                             <td><?php echo $result["email"]; ?></td>
-                            <td><?php echo $result["password"]; ?></td>
-                            <td><?php echo $result["address"]; ?></td>
-                            <td><?php echo $result["status"]; ?></td>
-                            <td><?php echo $result["created_at"]; ?></td>
+                            <td><?php echo $result["profile_picture"]; ?></td>
+                            <td><?php echo $result["year_of_birth"]; ?></td>
+                            <td><?php echo $result["gender"]; ?></td>
+                            <td><?php echo $result["province"]; ?></td>
+                            <td><?php echo $result["country"]; ?></td>
 
+                            <td><?php echo $result["created_at"]; ?></td>
                             <td><?php echo $result["updated_at"]; ?></td>
 
 
 
 
                             <td>
-                                <a href="edit_vendors.php?vendor_id=<?php echo $result["id"] ?>" class="btn btn-default btn-sm btn-icon icon-left">
-                                    <i class="entypo-pencil"></i>
-                                    Edit
-                                </a>
+                                
 
-                                <a href="send_data/send_vendor_data.php?id=<?php echo $result["id"] 
+                                <a href="send_data/send_user_data.php?id=<?php echo $result["id"] 
                                                                 ?>" class="btn btn-danger btn-sm btn-icon icon-left">
                                     <i class="entypo-cancel"></i>
                                     Delete
@@ -216,31 +219,31 @@ if (empty($_COOKIE['remember_me'])) {
 
 
     <!-- Imported styles on this page -->
-    <link rel="stylesheet" href="../assets/js/datatables/datatables.css">
-    <link rel="stylesheet" href="../assets/js/select2/select2-bootstrap.css">
-    <link rel="stylesheet" href="../assets/js/select2/select2.css">
+    <link rel="stylesheet" href="assets/js/datatables/datatables.css">
+    <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="assets/js/select2/select2.css">
 
     <!-- Bottom scripts (common) -->
-    <script src="../assets/js/gsap/TweenMax.min.js"></script>
-    <script src="../assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
-    <script src="../assets/js/bootstrap.js"></script>
-    <script src="../assets/js/joinable.js"></script>
-    <script src="../assets/js/resizeable.js"></script>
-    <script src="../assets/js/neon-api.js"></script>
+    <script src="assets/js/gsap/TweenMax.min.js"></script>
+    <script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/joinable.js"></script>
+    <script src="assets/js/resizeable.js"></script>
+    <script src="assets/js/neon-api.js"></script>
 
 
     <!-- Imported scripts on this page -->
-    <script src="../assets/js/datatables/datatables.js"></script>
-    <script src="../assets/js/select2/select2.min.js"></script>
-    <script src="../assets/js/neon-chat.js"></script>
+    <script src="assets/js/datatables/datatables.js"></script>
+    <script src="assets/js/select2/select2.min.js"></script>
+    <script src="assets/js/neon-chat.js"></script>
 
 
     <!-- JavaScripts initializations and stuff -->
-    <script src="../assets/js/neon-custom.js"></script>
+    <script src="assets/js/neon-custom.js"></script>
 
 
     <!-- Demo Settings -->
-    <script src="../assets/js/neon-demo.js"></script>
+    <script src="assets/js/neon-demo.js"></script>
 
     <script>
         $(document).ready(function() {

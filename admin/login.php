@@ -1,6 +1,6 @@
 <?php
 ob_start();
-include('includes/db.php');
+include('../includes/db_connection.php');
 session_start();
 
 // if (empty($_COOKIE['remember_me'])) {
@@ -43,7 +43,7 @@ session_start();
 			<div class="login-content">
 
 				<a href="index.html" class="logo">
-					<img src="../assets/images/logo@2x.png" width="120" alt="" />
+					<img src="assets/images/logo@2x.png" width="120" alt="" />
 				</a>
 
 				<p class="description">Dear user, log in to access the admin area!</p>
@@ -62,52 +62,58 @@ session_start();
 
 				if (isset($_POST['submit_login'])) {
 
-					$email = $_POST['email'];
-					$pass = $_POST['pass'];
+					$email = strtolower(trim($_POST['email']));
+					$password = trim($_POST['password']);
 
+					// check vendor is exist or not
 
-
-					$query_user = $conn->prepare("SELECT * FROM users WHERE email = '$email' AND password = '$pass'");
+					$query_user = $conn->prepare("SELECT * FROM users WHERE email = '$email' and role='admin'");
 					$query_user->execute();
-					$result11 = $query_user->fetch(PDO::FETCH_ASSOC);
+					$result = $query_user->fetch(PDO::FETCH_ASSOC);
 
-					if ($result11) {
+					if ($result) {
 
+						if (password_verify($password, $result["password"])) {
+							$_SESSION['ad_user_id'] = $result['id'];
+							$_SESSION['ad_username'] = $result['username'];
+							$_SESSION['ad_profile_picture'] = $result['profile_picture'];
+							$_SESSION['success'] = "Login Successfully";
+							if (isset($_POST["remember_me"])) {
+								setcookie("ad_remember_me", $result['id'], time() + (86400 * 30), "/"); // 86400 = 1 day
+							}
 
 
 
 				?>
-						<div class="alert alert-success alert-dismissible" role="alert">
-							<strong>Congrats!</strong>Login Successful.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
+							<div class="alert alert-success alert-dismissible" role="alert">
+								<strong>Congrats!</strong>Login Successful.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
 
 						<?php
-						if (isset($_POST["remember_me"])) {
-							setcookie("remember_me", $result11['id'], time() + (86400 * 30), "/"); // 86400 = 1 day
-							$_SESSION['user_id'] = $result11['id'];
-							$_SESSION["user_name"] = $result11['name'];
-							$_SESSION['role'] = $result11["role"];
+							header("location:index.php");
 						} else {
-							$_SESSION['user_id'] = $result11['id'];
-							$_SESSION["user_name"] = $result11['name'];
-							$_SESSION['role'] = $result11["role"];
-						}
-
-						// var_dump($_SESSION);
-
-						// var_dump($_COOKIE);
-
-						header("location:index.php");
-					} else {
 						?>
 
-						<!-- <div class="form-login-error">
+							<!-- <div class="form-login-error">
 							<h3>Invalid login</h3>
 							<p>Enter <strong>demo</strong>/<strong>demo</strong> as login and password.</p>
 						</div> -->
+
+							<div class="alert alert-dismissible alert-danger" role="alert">
+								<strong>Oops!</strong> Invalid email or Password.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+						<?php
+						}
+					} else {
+						?>
 
 						<div class="alert alert-dismissible alert-danger" role="alert">
 							<strong>Oops!</strong> Invalid email or Password.
@@ -142,13 +148,13 @@ session_start();
 								<i class="entypo-key"></i>
 							</div>
 
-							<input required="" type="password" class="form-control" name="pass" id="password" placeholder="Password" autocomplete="off" />
+							<input required="" type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" />
 						</div>
 
 					</div>
 
 					<div class="form-group">
-						<button type="submit" name="submit_login" class="btn btn-primary btn-block btn-login">
+						<button type="submit_login" name="submit_login" class="btn btn-primary btn-block btn-login">
 							<i class="entypo-login"></i>
 							Login In
 						</button>
@@ -176,22 +182,22 @@ session_start();
 
 
 	<!-- Bottom scripts (common) -->
-	<script src="../assets/js/gsap/TweenMax.min.js"></script>
-	<script src="../assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
-	<script src="../assets/js/bootstrap.js"></script>
-	<script src="../assets/js/joinable.js"></script>
-	<script src="../assets/js/resizeable.js"></script>
-	<script src="../assets/js/neon-api.js"></script>
-	<script src="../assets/js/jquery.validate.min.js"></script>
-	<script src="../assets/js/neon-login.js"></script>
+	<script src="assets/js/gsap/TweenMax.min.js"></script>
+	<script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+	<script src="assets/js/bootstrap.js"></script>
+	<script src="assets/js/joinable.js"></script>
+	<script src="assets/js/resizeable.js"></script>
+	<script src="assets/js/neon-api.js"></script>
+	<script src="assets/js/jquery.validate.min.js"></script>
+	<script src="assets/js/neon-login.js"></script>
 
 
 	<!-- JavaScripts initializations and stuff -->
-	<script src="../assets/js/neon-custom.js"></script>
+	<script src="assets/js/neon-custom.js"></script>
 
 
 	<!-- Demo Settings -->
-	<script src="../assets/js/neon-demo.js"></script>
+	<script src="assets/js/neon-demo.js"></script>
 
 </body>
 

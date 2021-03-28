@@ -18,6 +18,8 @@ session_start();
 
 <body>
 
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=507450097087970&autoLogAppEvents=1" nonce="4bjRG8iU"></script>
+
     <!-- Header Starts -->
     <?php include_once("includes/header.php") ?>
     <!-- Header Ends -->
@@ -172,12 +174,20 @@ session_start();
 
                                 </div>
 
+                                <?php
+                                $message_id = $result["id"];
+                                $c = 1;
+                                ?>
+
                                 <div class="comment-share row">
                                     <div class="col-lg-12">
-                                        <i class="fas fa-comment-alt mr-5"><span class=" ml-2">comment</span></i>
-                                        <i class="fas fa-comment-alt mr-5"><span class=" ml-2">share</span></i>
+                                        <i class="fas fa-comment-alt"><span class=" ml-2">comment</span></i>
+
+                                        <div class="fb-share-button" data-href="<?php echo  "http://confietoi.com/message.php?msg_id=$message_id" ?>" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo  "http://confietoi.com/message.php?msg_id=$message_id" ?>&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
                                     </div>
+
+
 
                                 </div>
 
@@ -203,10 +213,7 @@ session_start();
                                     </div>
                                 </div>
 
-                                <?php
-                                $message_id = $result["id"];
-                                $c = 1;
-                                ?>
+
 
                                 <div class="comments row" id=<?php echo "comments-div-$message_id" ?>>
                                     <?php
@@ -269,6 +276,7 @@ session_start();
                                             <a href='<?php echo  "message.php?msg_id=$message_id" ?>'>View All Comments</a>
                                         </div>
                                     <?php } ?>
+
 
                                 </div>
                             </div>

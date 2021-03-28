@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 
     // check vendor is exist or not
 
-    $query_user = $conn->prepare("SELECT * FROM users WHERE email = '$email'");
+    $query_user = $conn->prepare("SELECT * FROM users WHERE email = '$email' AND role='user' AND active='true'");
     $query_user->execute();
     $result = $query_user->fetch(PDO::FETCH_ASSOC);
 

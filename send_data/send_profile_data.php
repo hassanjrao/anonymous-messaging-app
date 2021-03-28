@@ -17,13 +17,10 @@ $response_arr[] = null;
 
 
 
-$fname = strtolower(trim($_POST["fname"]));
-$lname = strtolower(trim($_POST["lname"]));
-$address = strtolower(trim($_POST["address"]));
+$year_of_birth = strtolower(trim($_POST["year_of_birth"]));
 $country = strtolower(trim($_POST["country"]));
-$city = strtolower(trim($_POST["city"]));
-$state = strtolower(trim($_POST["state"]));
-$phone = strtolower(trim($_POST["phone"]));
+$province = strtolower(trim($_POST["province"]));
+$gender = trim($_POST["gender"]);
 
 $user_id = $_SESSION["user_id"];
 
@@ -44,17 +41,14 @@ if ($_FILES['profile_picture']['size'] == 0) {
 
 
 
-    $stmt = $conn->prepare("UPDATE `users` SET  fname=:fname,lname=:lname, address=:address,country=:country,city=:city,state=:state,phone=:phone,updated_at=CURRENT_TIMESTAMP WHERE id=:id");
+    $stmt = $conn->prepare("UPDATE `users` SET   year_of_birth=:year_of_birth,country=:country,province=:province,gender=:gender,updated_at=CURRENT_TIMESTAMP WHERE id=:id");
 
 
 
-    $stmt->bindParam(':fname', $fname);
-    $stmt->bindParam(':lname', $lname);
-    $stmt->bindParam(':address', $address);
+    $stmt->bindParam(':year_of_birth', $year_of_birth);
     $stmt->bindParam(':country', $country);
-    $stmt->bindParam(':city', $city);
-    $stmt->bindParam(':state', $state);
-    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':province', $province);
+    $stmt->bindParam(':gender', $gender);
 
     $stmt->bindParam(':id', $user_id);
 } else {
@@ -70,21 +64,19 @@ if ($_FILES['profile_picture']['size'] == 0) {
 
     move_uploaded_file($_FILES['profile_picture']['tmp_name'], $path);
 
-    $stmt = $conn->prepare("UPDATE `users` SET profile_picture=:profile_picture, fname=:fname,lname=:lname, address=:address,country=:country,city=:city,state=:state,phone=:phone,updated_at=CURRENT_TIMESTAMP WHERE id=:id");
+    $stmt = $conn->prepare("UPDATE `users` SET profile_picture=:profile_picture,  year_of_birth=:year_of_birth,country=:country,province=:province,gender=:gender,updated_at=CURRENT_TIMESTAMP WHERE id=:id");
 
 
     $stmt->bindParam(':profile_picture', $profile_picture);
-    $stmt->bindParam(':fname', $fname);
-    $stmt->bindParam(':lname', $lname);
-    $stmt->bindParam(':address', $address);
+
+    $stmt->bindParam(':year_of_birth', $year_of_birth);
     $stmt->bindParam(':country', $country);
-    $stmt->bindParam(':city', $city);
-    $stmt->bindParam(':state', $state);
-    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':province', $province);
+    $stmt->bindParam(':gender', $gender);
 
     $stmt->bindParam(':id', $user_id);
 
-    $_SESSION['profile_picture']=$profile_picture;
+    $_SESSION['profile_picture'] = $profile_picture;
 }
 
 
